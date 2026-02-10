@@ -1,9 +1,16 @@
-FROM node 
+FROM node:20-alpine
 
-RUN mkdir -p docker_backend
+WORKDIR /docker_backend
 
-COPY . /docker_backend
+# Copy package files first
+COPY package*.json ./
+
+# Install dependencies (THIS WAS MISSING)
+RUN npm install
+
+# Copy rest of code
+COPY . .
 
 EXPOSE 3000
 
-CMD ["node","/docker_backend/server.js"]
+CMD ["node", "server.js"]
